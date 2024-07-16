@@ -1,0 +1,7 @@
+[package]
+name = "example_tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+SerializeLib-rs = {path = ".."}
