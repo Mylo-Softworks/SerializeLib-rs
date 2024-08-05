@@ -18,7 +18,7 @@ macro_rules! impl_serializable_auto {
 
             fn deserialize(reader: &mut impl ReadableByteStream) -> Self {
                 let mut buffer = [0;size_of::<$t>()];
-                reader.read_simple(&mut buffer).unwrap();
+                reader.read(&mut buffer).unwrap();
                 if unsafe { USE_BIG_ENDIAN } { 
                     <$t>::from_be_bytes(buffer)
                 }

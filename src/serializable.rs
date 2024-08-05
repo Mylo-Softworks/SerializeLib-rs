@@ -79,7 +79,6 @@ macro_rules! serializable_base {
             )*
         }
 
-        // TODO: add serialize and deserialize to this enum. Use $id for the id
         impl Serializable for $name {
             fn serialize(&self, writer: &mut impl WritableStream<u8>) {
                 let id = match self { 

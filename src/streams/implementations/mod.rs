@@ -1,1 +1,2 @@
-mod filestream;
+pub mod filestream;
+pub mod memorystream;

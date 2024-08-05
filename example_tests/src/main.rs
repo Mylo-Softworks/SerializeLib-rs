@@ -1,8 +1,8 @@
-use std::fs::File;
 use std::i32;
 use SerializeLib_rs::{get_enum_param_part, serializable, serializable_base, macro_if_value_exists, macro_if_not_value_exists};
 use SerializeLib_rs::serializable::Serializable;
 use SerializeLib_rs::streams::{readablestream::ReadableByteStream, writablestream::WritableStream};
+use SerializeLib_rs::streams::implementations::memorystream::MemoryStream;
 use crate::TestEnum::{Empty, Something};
 
 serializable! {
@@ -20,7 +20,7 @@ serializable! {
 fn main() {
     
     
-    let mut file = File::options().create(true).write(true).open("test.bin").unwrap();
+    // let mut file = File::options().create(true).write(true).open("test.bin").unwrap();
     // let test = Test {
     //     a: 10,
     //     b: -666
@@ -30,12 +30,20 @@ fn main() {
     //     b: -666
     // });
     let test = vec![Empty, Something(Test {a:0, b:10}), Something(Test {a: 50, b: 3610})];
-    test.serialize(&mut file);
+    // test.serialize(&mut file);
     
-    drop(file);
+    // drop(file);
     
-    let mut file = File::open("test.bin").unwrap();
-    let test = Vec::<TestEnum>::deserialize(&mut file);
+    // let mut file = File::open("test.bin").unwrap();
+    // let test = Vec::<TestEnum>::deserialize(&mut file);
+    
+    let mut buffer: Vec<u8> = vec![];
+    let mut buffer_stream = MemoryStream::from_vec(&mut buffer);
+    
+    test.serialize(&mut buffer_stream);
+    
+    let test = Vec::<TestEnum>::deserialize(&mut buffer_stream);
+    
     // let v = test.b;
     // println!("{v}");
     // match test { 

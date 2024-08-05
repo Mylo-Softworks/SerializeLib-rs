@@ -50,8 +50,7 @@ impl ReadableStream<u8> for File {
         } else { None }
     }
 
-    fn read(&mut self, array: &mut [u8], offset: i64) -> Result<usize> {
-        self.seek(Current(offset))?;
+    fn read(&mut self, array: &mut [u8]) -> Result<usize> {
         Ok(std::io::Read::read(self, array)?)
     }
 }

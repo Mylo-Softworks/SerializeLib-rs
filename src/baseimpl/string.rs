@@ -12,7 +12,7 @@ impl Serializable for String {
     fn deserialize(reader: &mut impl ReadableByteStream) -> Self {
         let len = u32::deserialize(reader);
         let mut buffer = vec![0_u8; len as usize];
-        reader.read_simple(&mut buffer);
+        reader.read(&mut buffer).unwrap_or_default();
         String::from_utf8(buffer).unwrap()
     }
 }
